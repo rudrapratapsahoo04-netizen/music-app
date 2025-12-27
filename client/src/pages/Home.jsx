@@ -8,7 +8,7 @@ export default function Home() {
 
   // ✅ Fetch songs from LIVE backend
   useEffect(() => {
-    fetch("https://music-app-6tu4.onrender.com/api/songs")
+       fetch("https://music-app-6tu4.onrender.com/api/songs")
       .then(res => res.json())
       .then(data => setSongs(data))
       .catch(err => console.error(err));
