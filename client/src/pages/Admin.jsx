@@ -48,11 +48,11 @@ export default function Admin() {
       return;
     }
 
-    await fetch("http://localhost:5000/songs", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form)
-    });
+   await fetch("https://music-app-6tu4.onrender.com/api/songs", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(form)
+});
 
     setForm({ title: "", artist: "", cover: "", audio: "" });
     fetchSongs();
@@ -60,11 +60,12 @@ export default function Admin() {
   };
 
   // ================= FETCH SONGS =================
-  const fetchSongs = async () => {
-    const res = await fetch("http://localhost:5000/songs");
-    const data = await res.json();
-    setSongs(data);
-  };
+ const fetchSongs = async () => {
+  const res = await fetch("https://music-app-6tu4.onrender.com/api/songs");
+  const data = await res.json();
+  setSongs(data);
+};
+
 
   useEffect(() => {
     fetchSongs();
@@ -120,8 +121,6 @@ export default function Admin() {
     }));
   }}
 />
-
-
       <br /><br />
 
       <button onClick={addSong} disabled={uploading}>

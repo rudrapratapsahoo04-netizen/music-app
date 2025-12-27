@@ -7,12 +7,11 @@ export default function Home() {
   const [userStarted, setUserStarted] = useState(false);
 
   // ✅ Fetch songs from LIVE backend
-  useEffect(() => {
-       fetch("https://music-app-6tu4.onrender.com/api/songs")
-      .then(res => res.json())
-      .then(data => setSongs(data))
-      .catch(err => console.error(err));
-  }, []);
+ useEffect(() => {
+  fetch("https://music-app-6tu4.onrender.com/api/songs")
+    .then(res => res.json())
+    .then(data => setSongs(data));
+}, []);
 
   // ▶️ Play when song changes
   useEffect(() => {
