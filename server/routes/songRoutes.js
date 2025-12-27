@@ -1,38 +1,50 @@
-const express = require("express");
+import express from "express";
+import Song from "../models/Song.js";
+
 const router = express.Router();
-const Song = require("../models/Song");
 
-// GET SONGS
+/**
+ * GET all songs
+ * URL: /api/songs
+ */
 router.get("/", async (req, res) => {
-  const songs = await Song.find();
-  res.json(songs);
-});
-
-// ADD SONG
-router.post("/", async (req, res) => {
-  console.log("POST DATA RECEIVED 👉", req.body);
-
   try {
-    const song = new Song(req.body);
-    await song.save();
-
-    res.status(201).json(song);
+    const songs = await Song.find();
+    res.status(200).json(songs);
   } catch (error) {
-    console.log("SAVE ERROR ❌", error);
     res.status(500).json({ error: error.message });
   }
 });
 
-// DELETE song (ADMIN)
-router.delete("/:id", async (req, res) => {
-  await Song.findByIdAndDelete(req.params.id);
-  res.json({ message: "Song deleted" });
+/**
+ * ADD new song
+ * URL: /api/songs
+ */
+router.post("/", async (req, res) => {
+  try {
+    const song = new Song(req.body);
+    await song.save();
+    res.status(201).json(song);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
-module.exports = router;
+/**
+ * DELETE song by ID
+ * URL: /api/songs/:id
+ */
+router.delete("/:id", async (req, res) => {
+  try {
+    await Song.findByIdAndDelete(req.params.id);
+    res.json({ message: "Song deleted" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
+export default router;
 
-  
 
 
 
