@@ -1,3 +1,16 @@
+<a
+  href="#/admin"
+  style={{
+    color: "white",
+    background: "#ff4757",
+    padding: "8px 12px",
+    borderRadius: "6px",
+    textDecoration: "none"
+  }}
+>
+  ➕ Open Admin Panel
+</a>
+
 import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
