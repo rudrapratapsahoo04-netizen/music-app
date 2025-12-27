@@ -6,32 +6,31 @@ export default function Home() {
   const audioRef = useRef(null);
   const [userStarted, setUserStarted] = useState(false);
 
-  // Fetch songs
+  // ✅ Fetch songs from LIVE backend
   useEffect(() => {
-    fetch("http://localhost:5000/songs")
-      .then((res) => res.json())
-      .then((data) => setSongs(data));
+    fetch("https://music-app-6tu4.onrender.com/api/songs")
+      .then(res => res.json())
+      .then(data => setSongs(data))
+      .catch(err => console.error(err));
   }, []);
 
-  // Play when current changes (after user click)
+  // ▶️ Play when song changes
   useEffect(() => {
-    if (audioRef.current && userStarted) {
+    if (audioRef.current && current && userStarted) {
       audioRef.current.load();
       audioRef.current.play().catch(() => {});
     }
   }, [current, userStarted]);
 
   const startSong = (song) => {
-    setUserStarted(true); // 🔥 unlock autoplay
+    setUserStarted(true);
     setCurrent(song);
   };
 
   const playNext = () => {
     if (!current || songs.length === 0) return;
-
-    const index = songs.findIndex((s) => s._id === current._id);
-    const nextIndex = (index + 1) % songs.length;
-    setCurrent(songs[nextIndex]);
+    const index = songs.findIndex(s => s._id === current._id);
+    setCurrent(songs[(index + 1) % songs.length]);
   };
 
   return (
@@ -39,7 +38,7 @@ export default function Home() {
       <h2>🎧 Music App</h2>
 
       {/* SONG LIST */}
-      {songs.map((song) => (
+      {songs.map(song => (
         <div
           key={song._id}
           style={{ display: "flex", cursor: "pointer", marginBottom: 10 }}
@@ -64,7 +63,7 @@ export default function Home() {
             ref={audioRef}
             controls
             src={current.audio}
-            onEnded={playNext}   // 🔥 AUTO NEXT
+            onEnded={playNext}
           />
         </div>
       )}
